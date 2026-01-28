@@ -1,8 +1,8 @@
 import { getGameById, getAllGames } from "@/lib/freetogame";
-import { Monitor, Globe, Calendar, Building, Code, ExternalLink, ArrowLeft, Cpu, HardDrive, MonitorPlay } from "lucide-react";
+import { Monitor, Globe, Calendar, Building, Code, ExternalLink, Cpu, HardDrive, MonitorPlay } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import BackButton from "@/components/BackButton";
 
 interface GameDetailPageProps {
   params: Promise<{ id: string }>;
@@ -55,13 +55,7 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
         {/* Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
           {/* Back Button */}
-          <Link
-            href="/games"
-            className="inline-flex items-center gap-2 text-gray-300 hover:text-white mb-8 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Games
-          </Link>
+          <BackButton className="mb-8" />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Info */}

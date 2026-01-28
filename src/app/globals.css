@@ -12,6 +12,25 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Smooth scrolling & prevent horizontal overflow */
+html {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Enable smooth scroll only when no reduced motion preference */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -38,7 +57,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Additional smooth scrolling handled in earlier media query */
 
 /* Gaming-themed gradient text */
 .gradient-text {
@@ -132,6 +155,51 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
               0 0 40px rgba(168, 85, 247, 0.1);
+}
+
+/* Optimized game card rendering for virtualization */
+.game-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: transform 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.game-card:hover {
+  transform: translateZ(0) translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25),
+              0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+/* Disable hover transforms on touch devices for better performance */
+@media (hover: none) {
+  .game-card:hover {
+    transform: translateZ(0);
+    box-shadow: none;
+  }
+}
+
+/* Thin scrollbar for virtualized container */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #4c1d95;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #6d28d9;
+}
+
+/* Firefox scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #4c1d95 transparent;
 }
 
 /* Grid pattern overlay */
