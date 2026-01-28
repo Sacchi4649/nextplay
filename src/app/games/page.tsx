@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { Suspense, useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { Game } from "@/lib/freetogame";
@@ -9,10 +9,10 @@ import GameFilters from "@/components/GameFilters";
 import { PageLoading } from "@/components/LoadingSpinner";
 import { Sword, AlertCircle, Ghost } from "lucide-react";
 
-export default function GamesPage() {
+function GamesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn } = useUser();
 
   const [games, setGames] = useState<Game[]>([]);
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
@@ -197,5 +197,13 @@ export default function GamesPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function GamesPage() {
+  return (
+    <Suspense fallback={<PageLoading />}>
+      <GamesContent />
+    </Suspense>
   );
 }
